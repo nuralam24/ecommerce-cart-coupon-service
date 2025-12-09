@@ -1,4 +1,4 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Module, OnModuleInit, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
@@ -9,6 +9,8 @@ import { CouponsModule } from './modules/coupons/coupons.module';
 import { RedisModule } from './modules/redis';
 import { HealthModule } from './modules/health/health.module';
 import { SeederModule } from './modules/seeder';
+import { SqlInjectionDetectorMiddleware } from './middleware/sql-injection-detector.middleware';
+import { XssProtectionMiddleware } from './middleware/xss-protection.middleware';
 
 @Module({
   imports: [
@@ -45,6 +47,12 @@ import { SeederModule } from './modules/seeder';
   ],
 })
 export class AppModule implements OnModuleInit {
+  configure(consumer: MiddlewareConsumer) {
+    // Apply security middlewares to all routes
+    consumer
+      .apply(SqlInjectionDetectorMiddleware, XssProtectionMiddleware)
+      .forRoutes('*');
+  }
   constructor(private readonly dataSource: DataSource) {}
 
   async onModuleInit() {
