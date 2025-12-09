@@ -1,6 +1,6 @@
 # E-Commerce Cart & Coupon Service
 
-A comprehensive Cart and Coupon Service built with **TypeScript**, **NestJS**, **PostgreSQL** and **Redis**. This service allows customers to manage their shopping cart, apply coupons (both manual and auto-applied), and calculate total amounts after discounts with proper concurrency handling.
+A comprehensive Cart and Coupon Service built with **TypeScript**, **NestJS**, **PostgreSQL**, **Redis** and **Docker**. This service allows customers to manage their shopping cart, apply coupons (both manual and auto-applied), and calculate total amounts after discounts with proper concurrency handling.
 
 ## 📋 Table of Contents
 
